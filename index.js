@@ -47,11 +47,6 @@ async function run() {
 
 
     // Cart API
-    app.post("/cart", async (req, res) => {
-      const newProduct = req.body;
-      const result = await cartCollection.insertOne(newProduct);
-      res.send(result);
-    })
 
     app.get("/cart", async (req, res) => {
       const cursor = cartCollection.find()
@@ -61,14 +56,22 @@ async function run() {
 
     app.get("/cart/:id", async(req, res)=>{
       const id = req.params.id;
-      const query = {_id: new ObjectId(id)};
+      const query = {_id: id};
       const result = await cartCollection.findOne(query);
       res.send(result);
     })
 
+
+    app.post("/cart", async (req, res) => {
+      const newProduct = req.body;
+      const result = await cartCollection.insertOne(newProduct);
+      res.send(result);
+    })
+
+
     app.delete("/cart/:id", async(req, res) => {
       const id = req.params.id;
-      const query = { _id: new ObjectId(id)}
+      const query = { _id: id}
       const result = await cartCollection.deleteOne(query)
       res.send(result);
     })
