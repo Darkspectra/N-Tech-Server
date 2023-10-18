@@ -30,11 +30,11 @@ async function run() {
 
     const productCollection = client.db("techDB").collection("tech");
 
-    // app.get("/product", async(req, res)=>{
-    //   const cursor = productCollection.find()
-    //   const result = await cursor.toArray();
-    //   res.send(result);
-    // })
+    app.get("/product", async(req, res)=>{
+      const cursor = productCollection.find()
+      const result = await cursor.toArray();
+      res.send(result);
+    })
 
 
     app.post("/product", async(req, res)=>{
