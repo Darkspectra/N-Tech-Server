@@ -29,19 +29,33 @@ async function run() {
 
 
     const productCollection = client.db("techDB").collection("tech");
+    const cartCollection = client.db("techDB").collection("cart");
 
-    app.get("/product", async(req, res)=>{
+    app.get("/product", async (req, res) => {
       const cursor = productCollection.find()
       const result = await cursor.toArray();
       res.send(result);
     })
 
 
-    app.post("/product", async(req, res)=>{
-        const newProduct = req.body;
-        const result = await productCollection.insertOne(newProduct);
-        res.send(result);
-      })
+    app.post("/product", async (req, res) => {
+      const newProduct = req.body;
+      const result = await productCollection.insertOne(newProduct);
+      res.send(result);
+    })
+
+    // Cart API
+    app.post("/cart", async (req, res) => {
+      const newProduct = req.body;
+      const result = await cartCollection.insertOne(newProduct);
+      res.send(result);
+    })
+
+    app.get("/cart", async (req, res) => {
+      const cursor = cartCollection.find()
+      const result = await cursor.toArray();
+      res.send(result);
+    })
 
 
 
@@ -61,10 +75,10 @@ run().catch(console.dir);
 
 
 
-app.get('/', (req, res)=>{
-    res.send("tech server is running");
+app.get('/', (req, res) => {
+  res.send("tech server is running");
 })
 
-app.listen(port, ()=>{
-    console.log(`server is running on port: ${port}`);
+app.listen(port, () => {
+  console.log(`server is running on port: ${port}`);
 })
